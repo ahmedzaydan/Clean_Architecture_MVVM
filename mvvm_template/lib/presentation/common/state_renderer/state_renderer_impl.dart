@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:mvvm_template/presentation/common/state_renderer/state_renderer.dart';
 import 'package:mvvm_template/presentation/resources/strings_manager.dart';
 
@@ -13,7 +14,7 @@ abstract class FlowState {
 // Loading state (popup, full)
 class LoadingState extends FlowState {
   StateRendererType stateRendererType;
-  String message;
+  String message = AppStrings.loading.tr();
 
   LoadingState({
     required this.stateRendererType,
@@ -47,7 +48,7 @@ class ErrorState extends FlowState {
 // Content state
 class ContentState extends FlowState {
   @override
-  String getMessage() => AppStrings.empty;
+  String getMessage() => AppStrings.empty.tr();
 
   @override
   StateRendererType getStateRendererType() => StateRendererType.contentState;

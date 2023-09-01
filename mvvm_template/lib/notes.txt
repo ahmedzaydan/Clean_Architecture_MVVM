@@ -1,0 +1,17 @@
+To receive response:
+    1. create response class
+    1.2 create request class
+    2. create model class
+    3. create mapper (convert from data ---> domain)
+    4. add api inside app service client
+    5. create function with the same name in remote data source
+    6. create function with the same name in local data source
+    7. create function with the same name in repository
+    8. create function with the same name in repository impl
+    9. create use case
+    10. create view model
+    11. create function with the same name in viewmodel
+    12. create objects in di file 
+    13. call init function in routes manager
+    
+    // TODO ****************** sort based on layer

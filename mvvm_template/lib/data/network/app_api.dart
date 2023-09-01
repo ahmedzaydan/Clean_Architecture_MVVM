@@ -20,4 +20,20 @@ abstract class AppServiceClient {
   Future<ForgotPasswordResponse> forgotPassword(
     @Field("email") String email,
   );
+
+  @POST(Constants.registerEndpoint)
+  Future<AuthenticationResponse> register(
+    @Field("username") String username,
+    @Field("password") String password,
+    @Field("country_code") String countryCode,
+    @Field("email") String email,
+    @Field("phone") String phone,
+    @Field("photo") String photo,
+  );
+
+  @GET(Constants.homeEndpoint)
+  Future<HomeResponse> getHomeData();
+
+  @GET("${Constants.storeDetailsEndpoint}/1")
+  Future<StoreDetailsResponse> getStoreDetails();
 }

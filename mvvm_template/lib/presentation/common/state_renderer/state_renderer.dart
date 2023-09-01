@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mvvm_template/presentation/resources/assets_manager.dart';
@@ -20,7 +21,6 @@ enum StateRendererType {
 
   // General states
   contentState,
-
 }
 
 // Class which will return UI based on state type
@@ -54,7 +54,7 @@ class StateRenderer extends StatelessWidget {
           [
             _getAnimatedJsonImage(JsonAssets.error),
             _getMessage(message),
-            _getButton(AppStrings.ok, context),
+            _getButton(AppStrings.ok.tr(), context),
           ],
         );
       case StateRendererType.popupSuccessState:
@@ -63,7 +63,7 @@ class StateRenderer extends StatelessWidget {
           [
             _getAnimatedJsonImage(JsonAssets.success),
             _getMessage(message),
-            _getButton(AppStrings.ok, context),
+            _getButton(AppStrings.ok.tr(), context),
           ],
         );
       case StateRendererType.fullScreenLoadingState:
@@ -75,7 +75,7 @@ class StateRenderer extends StatelessWidget {
         return _getItemsColumn(children: [
           _getAnimatedJsonImage(JsonAssets.error),
           _getMessage(message),
-          _getButton(AppStrings.retryAgain, context),
+          _getButton(AppStrings.retryAgain.tr(), context),
         ]);
       case StateRendererType.fullScreenEmptyState:
         return _getItemsColumn(children: [

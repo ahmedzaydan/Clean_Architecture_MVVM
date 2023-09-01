@@ -1,13 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_template/app/di.dart';
 import 'package:mvvm_template/presentation/forgot_password/view/forgot_password_view.dart';
 import 'package:mvvm_template/presentation/login/view/login_view.dart';
 import 'package:mvvm_template/presentation/main/main_view.dart';
 import 'package:mvvm_template/presentation/onboarding/view/onboarding_view.dart';
-import 'package:mvvm_template/presentation/register/register_view.dart';
+import 'package:mvvm_template/presentation/register/view/register_view.dart';
 import 'package:mvvm_template/presentation/resources/strings_manager.dart';
 import 'package:mvvm_template/presentation/splash/splash_view.dart';
-import 'package:mvvm_template/presentation/store_details/store_details_view.dart';
+import 'package:mvvm_template/presentation/store_details/view/store_details_view.dart';
 
 class Routes {
   static const String splashRoute = "/";
@@ -28,15 +29,18 @@ class RouteGenerator {
         initLoginModule();
         return MaterialPageRoute(builder: (_) => const LoginView());
       case Routes.registerRoute:
+        initRegisterModule();
         return MaterialPageRoute(builder: (_) => const RegisterView());
       case Routes.forgotPasswordRoute:
-        initForgotPassword();
+        initForgotPasswordModule();
         return MaterialPageRoute(builder: (_) => const ForgotPasswordView());
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => const OnBoardingView());
       case Routes.mainRoute:
+        initHomeModule();
         return MaterialPageRoute(builder: (_) => const MainView());
       case Routes.storeDetailsRoute:
+        initStoreDetailsModule();
         return MaterialPageRoute(builder: (_) => const StoreDetailsView());
       default:
         return unDefinedRoute();
@@ -47,14 +51,10 @@ class RouteGenerator {
     return MaterialPageRoute(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: const Text(
-            AppStrings.noRouteFound,
-          ),
+          title:  Text(AppStrings.noRouteFound.tr()),
         ),
-        body: const Center(
-          child: Text(
-            AppStrings.noRouteFound,
-          ),
+        body:  Center(
+          child: Text(AppStrings.noRouteFound.tr()),
         ),
       ),
     );

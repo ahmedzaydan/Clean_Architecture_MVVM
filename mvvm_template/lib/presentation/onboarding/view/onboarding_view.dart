@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -173,7 +174,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 child: Text(
                   AppStrings.onBoardingSkip,
                   style: Theme.of(context).textTheme.bodyLarge,
-                ),
+                ).tr(),
               ),
             ),
 

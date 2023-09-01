@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mvvm_template/domain/usecase/forgot_password_usecase.dart';
 import 'package:mvvm_template/presentation/base/base_viewmodel.dart';
@@ -13,9 +14,9 @@ import '../../common/state_renderer/state_renderer_impl.dart';
 class ForgotPasswordViewModel extends BaseViewModel
     implements ForgotPasswordViewModelInputs, ForgotPasswordViewModelOutputs {
   // Stream controllers
-  final StreamController<String> _emailStreamController =
+  final StreamController _emailStreamController =
       StreamController<String>.broadcast();
-  final StreamController<void> _areAllInputValidStreamController =
+  final StreamController _areAllInputValidStreamController =
       StreamController<void>.broadcast();
 
   final ForgotPasswordUseCase _forgotPasswordUseCase;
@@ -23,7 +24,7 @@ class ForgotPasswordViewModel extends BaseViewModel
   ForgotPasswordViewModel(this._forgotPasswordUseCase);
 
   ForgotPasswordObject forgotPasswordObject =
-      ForgotPasswordObject(email: AppStrings.empty);
+      ForgotPasswordObject(email: AppStrings.empty.tr());
 
   // Inputs
   @override

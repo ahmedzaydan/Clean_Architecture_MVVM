@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:mvvm_template/domain/usecase/login_usecase.dart';
 import 'package:mvvm_template/presentation/base/base_viewmodel.dart';
 import 'package:mvvm_template/presentation/common/freezed_data_classes.dart';
@@ -21,27 +22,40 @@ class LoginViewModel extends BaseViewModel
       StreamController<bool>();
 
   LoginObject loginObject = LoginObject(
-    username: AppStrings.empty,
-    password: AppStrings.empty,
+    username: AppStrings.empty.tr(),
+    password: AppStrings.empty.tr(),
   );
 
   final LoginUseCase _loginUseCase;
   LoginViewModel(this._loginUseCase);
 
   // Inputs
-  @override
-  void dispose() {
-    _usernameStreamController.close();
-    _passwordStreamController.close();
-    _areAllInputsValidStreamController.close();
-    isUserLoggedInSuccessfullyStreamController.close();
-    super.dispose();
-  }
 
   @override
   void start() {
     // View model should tell view, please show content state
     inputState.add(ContentState());
+  }
+
+  @override
+  void login() async {
+    inputState.add(
+        LoadingState(stateRendererType: StateRendererType.popupLoadingState));
+    (await _loginUseCase.execute(
+      LoginUseCaseInput(
+        email: loginObject.username,
+        password: loginObject.password,
+      ),
+    ))
+        .fold((failure) {
+      inputState.add(ErrorState(
+        stateRendererType: StateRendererType.popupErrorState,
+        message: failure.message,
+      ));
+    }, (data) {
+      inputState.add(ContentState());
+      isUserLoggedInSuccessfullyStreamController.add(true);
+    });
   }
 
   @override
@@ -65,27 +79,6 @@ class LoginViewModel extends BaseViewModel
     inputUsername.add(username);
     loginObject = loginObject.copyWith(username: username);
     inputAreAllInputsValid.add(null);
-  }
-
-  @override
-  void login() async {
-    inputState.add(
-        LoadingState(stateRendererType: StateRendererType.popupLoadingState));
-    (await _loginUseCase.execute(
-      LoginUseCaseInput(
-        email: loginObject.username,
-        password: loginObject.password,
-      ),
-    ))
-        .fold((failure) {
-      inputState.add(ErrorState(
-        stateRendererType: StateRendererType.popupErrorState,
-        message: failure.message,
-      ));
-    }, (data) {
-      inputState.add(ContentState());
-      isUserLoggedInSuccessfullyStreamController.add(true);
-    });
   }
 
   // Outputs
@@ -114,6 +107,15 @@ class LoginViewModel extends BaseViewModel
   bool _areAllInputsValid() {
     return _isPasswordValid(loginObject.password) &&
         _isUsernameValid(loginObject.username);
+  }
+
+  @override
+  void dispose() {
+    _usernameStreamController.close();
+    _passwordStreamController.close();
+    _areAllInputsValidStreamController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
+    super.dispose();
   }
 }
 

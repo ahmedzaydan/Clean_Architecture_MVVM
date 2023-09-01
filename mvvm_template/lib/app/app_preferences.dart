@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:mvvm_template/presentation/resources/language_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,13 +11,38 @@ class AppPreferences {
   AppPreferences(this._sharedPreferences);
 
   Future<String> getAppLanguage() async {
-    String? lang =
-        _sharedPreferences.getString(Constants.preferencesKeyLanguage);
+    String? language = _sharedPreferences.getString(Constants.prefKeyLanguage);
 
-    if (lang != null && lang.isNotEmpty) {
-      return lang;
+    if (language != null && language.isNotEmpty) {
+      return language;
     } else {
-      return LanguageType.ENGLISH.getValue();
+      return LanguageType.english.getValue();
+    }
+  }
+
+  Future<void> changeAppLanguage() async {
+    String? currentLanguage = await getAppLanguage();
+    if (currentLanguage == LanguageType.arabic.getValue()) {
+      // Set english
+      _sharedPreferences.setString(
+        Constants.prefKeyLanguage,
+        LanguageType.english.getValue(),
+      );
+    } else {
+      // Set arabic
+      _sharedPreferences.setString(
+        Constants.prefKeyLanguage,
+        LanguageType.arabic.getValue(),
+      ); 
+    }
+  }
+
+  Future<Locale> getLocal() async {
+    String? currentLanguage = await getAppLanguage();
+    if (currentLanguage == LanguageType.arabic.getValue()) {
+      return Constants.arLocal;
+    } else {
+      return Constants.enLocal;
     }
   }
 
@@ -44,5 +71,9 @@ class AppPreferences {
   Future<bool> isUserLoggedIn() async {
     return _sharedPreferences.getBool(Constants.preferencesKeyIsUserLoggedIn) ??
         false;
+  }
+
+  Future<void> logout() {
+    return _sharedPreferences.remove(Constants.preferencesKeyIsUserLoggedIn);
   }
 }

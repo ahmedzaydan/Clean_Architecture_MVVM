@@ -16,3 +16,15 @@ class ForgotPasswordObject with _$ForgotPasswordObject {
     required String email,
   }) = _ForgotPasswordObject;
 }
+
+@freezed
+class RegisterObject with _$RegisterObject {
+  factory RegisterObject({
+    required String username,
+    required String email,
+    required String password,
+    required String phoneNumber,
+    required String countryCode,
+    required String profilePicture,
+  }) = _RegisterObject;
+}

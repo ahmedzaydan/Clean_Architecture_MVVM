@@ -1,20 +1,20 @@
+import 'package:mvvm_template/app/constants.dart';
+
 enum LanguageType {
-  ENGLISH,
-  ARABIC,
+  english,
+  arabic,
 }
 
-const String ENGLISH = 'en';
-const String ARABIC = 'ar';
 
-extension LangugageTypeExtension on LanguageType {
+extension LanguageTypeExtension on LanguageType {
   String getValue() {
     switch (this) {
-      case LanguageType.ENGLISH:
-        return ENGLISH;
-      case LanguageType.ARABIC:
-        return ARABIC;
+      case LanguageType.english:
+        return Constants.english;
+      case LanguageType.arabic:
+        return Constants.arabic;
       default:
-        return ENGLISH;
+        return Constants.english;
     }
   }
 }
